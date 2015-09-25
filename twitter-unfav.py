@@ -32,7 +32,7 @@ config_files = [
 # Parse Command Line Options
 usage = "usage: %prog option"
 parser = OptionParser(usage=usage, version="%prog 0.1")
-parser.add_option("-t", "--time",   dest="time",   action="store", type="int", default=7, help="Delete favorites older than this time in days.")
+parser.add_option("-t", "--time",   dest="time",   action="store", type="int", default=30, help="Delete favorites older than this time in days. Default: 30")
 parser.add_option("-c", "--config", dest="config", action="store",      help="Use specified config file instead of default.")
 parser.add_option("", "--debug",    dest="debug",  action="store_true", help="Print debugging output.")
 (opt, args) = parser.parse_args()
