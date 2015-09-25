@@ -1,0 +1,11 @@
+[Twitter]
+# Unfortunately, Twitter requires us to register with them before we are allowed
+# to use their API. This gives them complete control and puts us at their mercy.
+# Please consider switching to your own https://gnu.io/social/ instance.
+#
+# You can register at https://dev.twitter.com/apps/new
+consumer_key=
+consumer_secret=
+access_token_key=
+access_token_secret=
+
