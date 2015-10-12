@@ -48,7 +48,7 @@ if(opt.config != None):
 config = ConfigParser.SafeConfigParser()
 used_config = config.read(config_files)
 
-if(not config.has_section('Twitter')):
+if(not config.has_section('Twitter') or config.get('Twitter', 'consumer_secret') == ''):
     print "Error: Could not find a valid config file."
     sys.exit(1)
 
