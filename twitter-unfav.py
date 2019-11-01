@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
 #    Twitter UnFav
@@ -19,7 +19,7 @@
 
 import sys, os
 from optparse import OptionParser
-import ConfigParser
+import configparser
 import twitter
 import time, datetime
 
@@ -42,14 +42,14 @@ if(opt.config != None):
         # use supplied argument for config file first
         config_files.insert(0, opt.config)
     else:
-        print "Error: Could not find config file '%s'." % opt.config
+        print("Error: Could not find config file '%s'." % opt.config)
         sys.exit(1)
 
-config = ConfigParser.SafeConfigParser()
+config = configparser.ConfigParser()
 used_config = config.read(config_files)
 
 if(not config.has_section('Twitter') or config.get('Twitter', 'consumer_secret') == ''):
-    print "Error: Could not find a valid config file."
+    print("Error: Could not find a valid config file.")
     sys.exit(1)
 
 # Set-up Twitter API
@@ -63,35 +63,35 @@ api = twitter.Api(
 
 def main():
     if(opt.debug):
-        print "Used configuration file(s): %s" % used_config
-        print
-        print "Will unfav all tweets older than %d days." % opt.time
-        print
+        print("Used configuration file(s): %s" % used_config)
+        print()
+        print("Will unfav all tweets older than %d days." % opt.time)
+        print()
 
     # get maximum number of favorited tweets
     favs = api.GetFavorites(count=200, include_entities=False)
 
     for fav in favs:
         if opt.debug:
-            print fav.id
-            print fav.text
-            print fav.created_at
+            print(fav.id)
+            print(fav.text)
+            print(fav.created_at)
 
         # parse date of tweet
         fav_date = datetime.datetime.fromtimestamp(time.mktime(time.strptime(fav.created_at, "%a %b %d %H:%M:%S +0000 %Y")))
         
         if opt.debug:
-            print (datetime.datetime.today() - fav_date).days
-            print
+            print((datetime.datetime.today() - fav_date).days)
+            print()
         
         # check if tweet is older than X days
         if((datetime.datetime.today() - fav_date).days > opt.time):
             # check all, because we don't trust Twitter to return list sorted
             if opt.debug:
-                print "Unfav %i\n" % fav.id
+                print("Unfav %i\n" % fav.id)
 
             # unfav tweet
-            api.DestroyFavorite(id=fav.id)
+            api.DestroyFavorite(status_id=fav.id)
 
 
 if __name__ == '__main__':
